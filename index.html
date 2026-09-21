@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CryptoFolio.AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">₿</div>
+    <div>
+      <div class="header-title">CRYPTOFOLIO.AI</div>
+    </div>
+    <div class="header-sub">🔒 Crypto Domain Only &middot; GPT-4o</div>
+  </div>
+
+  <div class="main">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+
+      <div class="portfolio-section">
+        <div class="section-label">Portfolio Overview</div>
+        <div class="portfolio-total" id="totalValue">$0.00</div>
+        <div class="portfolio-change" id="totalChange">—</div>
+        <div class="stats-row" id="statsRow" style="display:none">
+          <div class="stat-pill">Holdings: <span class="stat-val" id="holdingCount">0</span></div>
+          <div class="stat-pill">Best: <span class="stat-val" id="bestAsset">—</span></div>
+          <div class="stat-pill">Risk: <span class="stat-val" id="riskScore">—</span></div>
+        </div>
+      </div>
+
+      <div class="add-coin-area">
+        <div class="section-label">Add Holdings</div>
+        <div class="input-row">
+          <input class="coin-input" id="coinSymbol"  placeholder="Symbol (BTC)" />
+          <input class="coin-input" id="coinAmount"  placeholder="Amount"        type="number" step="any"/>
+          <input class="coin-input" id="coinPrice"   placeholder="Buy Price $"   type="number" step="any"/>
+          <button class="add-btn" onclick="addCoin()">+ ADD</button>
+        </div>
+        <div class="quick-btns">
+          <button class="qbtn" onclick="addPreset('BTC',0.5,42000)">BTC</button>
+          <button class="qbtn" onclick="addPreset('ETH',5,2800)">ETH</button>
+          <button class="qbtn" onclick="addPreset('SOL',50,120)">SOL</button>
+          <button class="qbtn" onclick="addPreset('BNB',20,380)">BNB</button>
+          <button class="qbtn" onclick="addPreset('MATIC',1000,0.8)">MATIC</button>
+          <button class="qbtn" onclick="addPreset('ADA',2000,0.45)">ADA</button>
+        </div>
+      </div>
+
+      <div class="chart-area">
+        <div id="assetsContainer">
+          <div class="empty-state">
+            <div class="empty-icon">📊</div>
+            <div>Add your crypto holdings above</div>
+            <div style="font-size:10px;color:var(--muted)">or click a quick-add button</div>
+          </div>
+        </div>
+        <div id="donutArea" style="display:none">
+          <div class="section-label" style="margin-top:16px">Allocation</div>
+          <div class="allocation-donut">
+            <svg id="donutSvg" width="110" height="110" viewBox="0 0 110 110"></svg>
+            <div class="donut-legend" id="donutLegend"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+
+      <div class="chat-header">
+        <div class="ai-indicator"></div>
+        <div class="chat-title">AI PORTFOLIO ADVISOR</div>
+        <div class="chat-sub">Powered by GPT-4o</div>
+      </div>
+
+      <div class="messages" id="messages">
+        <div class="msg ai">
+          <div class="msg-label">AI ADVISOR</div>
+          <div class="msg-bubble">
+            👋 Welcome to <strong>CryptoFolio.AI</strong><br><br>
+            I can help with:<br>
+            • Portfolio risk &amp; analysis<br>
+            • Allocation &amp; rebalancing<br>
+            • DCA strategies<br>
+            • Crypto market insights<br>
+            • Blockchain fundamentals<br><br>
+            <em style="color:var(--muted);font-size:12px">⚠️ Crypto questions only. Add holdings on the left for personalized advice.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-prompts">
+        <div class="qp-label">Quick Analysis</div>
+        <div class="qp-row">
+          <button class="qp-btn" onclick="sendQuick('Analyze my portfolio risk')">⚡ Risk</button>
+          <button class="qp-btn" onclick="sendQuick('Should I rebalance?')">⚖️ Rebalance</button>
+          <button class="qp-btn" onclick="sendQuick('Rate my diversification')">🎯 Diversify</button>
+          <button class="qp-btn" onclick="sendQuick('Give me DCA tips for my holdings')">📈 DCA</button>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <textarea
+          class="chat-input" id="chatInput"
+          placeholder="Ask about your crypto portfolio..."
+          rows="1"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
